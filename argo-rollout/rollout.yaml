@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: nginx
@@ -21,7 +21,11 @@ spec:
             - containerPort: 80
 
   strategy:
-    blueGreen:
-      activeService: nginx-active
-      previewService: nginx-preview
-      autoPromotionEnabled: false
+    canary:
+      canaryService: nginx-canary
+      stableService: nginx-stable
+      steps:
+        - setWeight: 20
+        - pause: {duration: 30s}
+        - setWeight: 50
+        - pause: {}
