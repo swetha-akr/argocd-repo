@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-ui
+  namespace: argocd
+  labels:
+    app: argocd-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-ui
+  template:
+    metadata:
+      labels:
+        app: argocd-ui
+    spec:
+      containers:
+        - name: argocd-ui
+          image: quay.io/argoproj/argocd:v2.11.3
+          args:
+            - argocd-server
+            - --insecure
+          ports:
+            - containerPort: 8080
