@@ -21,7 +21,7 @@ spec:
             - containerPort: 80
 
   strategy:
-    canary:
-      steps:
-        - setWeight: 50
-        - pause: {}
+    blueGreen:
+      activeService: nginx-active
+      previewService: nginx-preview
+      autoPromotionEnabled: false
